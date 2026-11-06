@@ -42,9 +42,23 @@ src/pages/      Today, History, Settings
 
 All reads and writes go through the `DataStore` interface in `src/data/store.ts`, so a sync backend can replace it later. Entry IDs are UUIDs for the same reason.
 
-## iPhone
+## Install on iPhone (GitHub Pages)
 
-Dev servers listen on `127.0.0.1` only, so the iPhone can't reach them yet.
+The build is static files with relative paths and hash routes, so it works at any GitHub Pages URL. Only the app's code is published. Your logs stay in the phone's storage.
+
+1. Create a new **public** repo on your personal GitHub account (Pages on private repos needs a paid plan), for example `holdout`.
+2. In the repo: Settings → Pages → Source: **GitHub Actions**.
+3. Push this project to the repo's `main` branch. `.github/workflows/pages.yml` runs the tests, builds, and deploys.
+4. On the iPhone, open `https://<your-username>.github.io/holdout/` in Safari, then Share → **Add to Home Screen**.
+5. Open it from the Home Screen once while online. After that it works offline.
+
+To update, push again. The installed app shows "A new version is ready" the next time it's opened online.
+
+Keep the same URL. iPhone ties the app's data to its address, so a renamed repo or a different username means an empty app. Export a backup in Settings first if you ever move it.
+
+## Local network testing (optional)
+
+Dev servers listen on `127.0.0.1` only, so the iPhone can't reach them.
 
 Installing to the Home Screen with offline support needs a **trusted HTTPS origin**. Safari won't register a service worker over plain HTTP on a LAN address or with an untrusted certificate. Put a trusted key and cert at `certs/key.pem` and `certs/cert.pem` (for example from `mkcert`, with its root CA installed and trusted on the iPhone under Settings → General → About → Certificate Trust Settings) and Vite will serve HTTPS automatically. `certs/` is gitignored.
 

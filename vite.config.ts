@@ -16,6 +16,8 @@ const https =
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string }
 
 export default defineConfig({
+  // Relative base so the build works at any path, e.g. https://<user>.github.io/<repo>/
+  base: './',
   define: { __APP_VERSION__: JSON.stringify(pkg.version) },
   server: { host: '127.0.0.1', https },
   preview: { host: '127.0.0.1', https },
@@ -29,8 +31,8 @@ export default defineConfig({
         name: 'Holdout',
         short_name: 'Holdout',
         description: 'Bank the calories you skip. Private, offline, on your device.',
-        start_url: '/',
-        scope: '/',
+        start_url: './',
+        scope: './',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#000000',
@@ -43,7 +45,6 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}'],
-        navigateFallback: '/index.html',
         cleanupOutdatedCaches: true,
       },
     }),

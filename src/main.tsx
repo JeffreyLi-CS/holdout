@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router'
+import { HashRouter, Route, Routes } from 'react-router'
 import { AppShell } from './components/AppShell'
 import { ToastProvider } from './components/Toast'
 import { UpdatePrompt } from './components/UpdatePrompt'
@@ -17,7 +17,8 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <ToastProvider>
-        <BrowserRouter>
+        {/* Hash routes: static hosts like GitHub Pages have no fallback for deep links. */}
+        <HashRouter>
           <Routes>
             <Route element={<AppShell />}>
               <Route index element={<HomePage />} />
@@ -26,7 +27,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="*" element={<HomePage />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
         <UpdatePrompt />
       </ToastProvider>
     </ThemeProvider>
